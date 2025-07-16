@@ -9,7 +9,7 @@ namespace loglib
     class Logger : public ILogger
     {
     public:
-        Logger(const std::string& fileName, LogLevel defaultLevel);
+        Logger(const std::string& fileName = "file_in_write.txt", LogLevel defaultLevel= LogLevel::Info);
         ~Logger();
 
         void log(const std::string& message, LogLevel level) override;
@@ -22,6 +22,6 @@ namespace loglib
         LogLevel currentLevel_;
 
         std::string getCurrentTime() const;
-        std:: string LevelToString(LogLevel level) const;
+        std::string levelToString(LogLevel level) const;
     };
 }
