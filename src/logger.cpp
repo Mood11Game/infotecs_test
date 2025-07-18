@@ -7,9 +7,15 @@
 namespace loglib {
 
     Logger::Logger(const std::string& filename, LogLevel defaultLevel)
-        : currentLevel_(defaultLevel)
+        : logNameFile_(filename), currentLevel_(defaultLevel)
     {
-        logFile_.open(filename, std::ios::app);
+        initLogFile();
+    }
+
+    Logger::Logger()
+        : logNameFile_("file_in_write.txt"),  currentLevel_(LogLevel::Info)
+    {
+        initLogFile();
     }
 
     Logger::~Logger() 
@@ -20,13 +26,48 @@ namespace loglib {
         }
     }
 
+    void Logger::initLogFile()
+    {
+        logFile_.open(logNameFile_, std::ios::app);
+
+        if(!logFile_.is_open())
+        {
+            std::cout << "WARNING: Unable to open log file: " << logNameFile_ << std::endl;
+        }
+    }
+
+    const std::string& Logger::getLogFileName() const
+    {
+        return logNameFile_;
+    }
+
+    void Logger::setLogFile(const std::string& newFileName)
+    {
+        std::lock_guard<std::mutex> lock(mutex_);
+
+        if(logFile_.is_open())
+        {
+            logFile_.close();
+        }
+
+        logNameFile_ = newFileName;
+        logFile_.open(logNameFile_, std::ios::app);
+
+        if(!logFile_.is_open())
+            std::cout << "WARNING: Unable to open log file: " << logNameFile_ << std::endl;
+
+    }
+
+    void Logger::log(const std::string& message) 
+    {
+        log(message, currentLevel_);
+    }
+
     void Logger::log(const std::string& message, LogLevel level) 
     {
         if (level < currentLevel_) 
             return;
 
-            
-        
 
         std::lock_guard<std::mutex> lock(mutex_);
         if (logFile_.is_open()) 

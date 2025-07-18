@@ -1,6 +1,7 @@
 #include <iostream>
 #include "loglib/logger.hpp"
 
+// TEST FOR CHANGE LOG FILE NAME & CONST RETURN LOG FILE NAME
 
 int main()
 {
@@ -8,7 +9,7 @@ int main()
     std::cout << "Current log status: "
         << static_cast<int>(logger.getLogLevel()) << std::endl;
 
-    logger.log("It info message(write)", loglib::LogLevel::Info);
+    logger.log("It info message(write)"); // defult INFO
     logger.log("It warning(write)", loglib::LogLevel::Warning);
     logger.log("It error(write)", loglib::LogLevel::Error);
 
