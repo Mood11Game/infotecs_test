@@ -41,3 +41,5 @@ target_include_directories(log_app PRIVATE
 )
 
 target_link_libraries(log_app PRIVATE loglib)
+
+

@@ -1,8 +1,6 @@
 #include <iostream>
 #include "loglib/logger.hpp"
 
-// TEST FOR CHANGE LOG FILE NAME & CONST RETURN LOG FILE NAME
-
 int main()
 {
     loglib::Logger logger;
