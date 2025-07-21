@@ -50,7 +50,7 @@ namespace loglib {
             logFile_.close();
         }
 
-        logNameFile_ = newFileName;
+        logNameFile_ = newFileName + ".txt";
         logFile_.open(logNameFile_, std::ios::app);
 
         if(!logFile_.is_open())

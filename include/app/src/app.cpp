@@ -59,10 +59,73 @@ namespace app
     
     void App::startMess() const
     {
-        std::cout << "Enter message. Fromat: [LEVEL] message\n"
-                << "LEVEL: INFO, WARNING, ERROR(optional default INFO)\n"
-                << "Type 'exit' to quit\n";
+        std::cout << "\n=== App logger ===\n" 
+                << "- Enter message. Fromat: [LEVEL] message \n"
+                << "- LEVEL: INFO, WARNING, ERROR(optional default INFO) \n"
+                << "- Type 'setting' \n"
+                << "- Type 'exit' to quit \n";
         
+    }
+
+    void App::settingMess() const
+    {
+        std::cout << "\n=== Setting ===\n" 
+                << "1 - Show current log file name\n"
+                << "2 - Change log file name\n"
+                << "3 - Show current log level\n"
+                << "4 - Change log level\n"
+                << "5 - Return to main menu\n";
+
+    }
+
+    void App::setting()
+    {
+        int command;
+
+        do
+        {
+            std::cout << "Enter command number: ";
+            std::cin >> command;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+
+            switch (command)
+            {
+            case 1:
+                std::cout << "Current log file: " << logger_.getLogFileName() << std::endl;
+                break;
+            case 2:
+            {
+                std::cout << "Current file: " << logger_.getLogFileName() << std::endl;
+                std::cout << "Enter new log file name: ";
+                std::string newFileNameH;
+                std::getline(std::cin, newFileNameH);
+                logger_.setLogFile(newFileNameH);
+                break;
+            }
+            case 3:
+                std::cout << "LEVEL: 0 - INFO, 1 - WARNING, 2 - ERROR\n";
+                std::cout << "Current level: " << static_cast<int>(logger_.getLogLevel()) << std::endl;
+                break;
+            case 4:
+            {
+                std::cout << "LEVEL: 0 - INFO, 1 - WARNING, 2 - ERROR\n";
+                std::cout << "Current level: " << static_cast<int>(logger_.getLogLevel()) << std::endl;
+                std::cout << "Enter new level: ";
+                int nl;
+                std::cin >> nl;
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
+                logger_.setLogLevel(static_cast<loglib::LogLevel>(nl));
+                break;
+            }
+            case 5:
+                std::cout << "Returning to main menu...\n";
+                break;
+            default:
+                std::cout << "Enter pleace 1 - 5\n";
+                break;
+            }    
+        } while (command != 5);
+
     }
 
     void App::run()
@@ -78,6 +141,13 @@ namespace app
             {
                 stop();
                 break;
+            }
+            else if (inputLine == "setting")
+            {
+                settingMess();
+                setting();
+                startMess();
+                continue;
             }
 
             std::string mess;
@@ -101,10 +171,12 @@ namespace app
             else
                 mess = inputLine;
 
+            {    
+                std::lock_guard<std::mutex> lock(queueMutex_);
+                messageQueue_.push({mess, currnetLevel});
+            }
+            queueCV_.notify_one();
 
-            std::lock_guard<std::mutex> lock(queueMutex_);
-            messageQueue_.push({mess, currnetLevel});
         }
     }
-
 }

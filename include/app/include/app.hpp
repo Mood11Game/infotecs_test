@@ -9,6 +9,7 @@
 #include <mutex>
 #include <atomic>
 #include <condition_variable>
+#include <string>
 
 namespace app
 {
@@ -23,6 +24,9 @@ namespace app
 
     private:
         void startMess() const;
+        void settingMess() const;
+        void setting();
+        std::string change_data(int num);
         void workerTheradFunc();
         void stop();
         
