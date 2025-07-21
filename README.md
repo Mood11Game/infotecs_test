@@ -67,3 +67,22 @@ make
 ./log_app 
 ```
 
+##Скриншоты
+<img width="399" height="96" alt="image" src="https://github.com/user-attachments/assets/326ba8a1-3eb7-4796-a01d-d4390ce43600" />
+
+<img width="224" height="115" alt="image" src="https://github.com/user-attachments/assets/f3f6d833-ad10-48d2-bf5b-c80b5f257159" />
+
+<img width="271" height="164" alt="image" src="https://github.com/user-attachments/assets/45d64838-1825-4821-aae8-c44fc9b70b25" />
+
+<img width="321" height="192" alt="image" src="https://github.com/user-attachments/assets/c7ff98ea-e400-4711-9071-992e7e1602f6" />
+
+<img width="424" height="135" alt="image" src="https://github.com/user-attachments/assets/bbc15701-7e01-4223-b3cc-3d2759f2df72" />
+
+<img width="758" height="530" alt="image" src="https://github.com/user-attachments/assets/0914d4b2-356f-4337-a0f1-2a86e6ffae69" />
+
+
+
+
+
+
+
